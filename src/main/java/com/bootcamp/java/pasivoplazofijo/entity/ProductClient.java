@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Data
 @Builder
@@ -87,6 +88,19 @@ public class ProductClient {
     private Double transactionFee;
 
     @NotNull
+    @Indexed(unique = true)
     private String creditCardNumber;
+
+    @NotNull
+    private Integer billingDay;
+
+    @NotNull
+    private Date billingDate;
+
+    @NotNull
+    private Double invoiceDebt;
+
+    @NotNull
+    private Double expiredDebt;
 
 }

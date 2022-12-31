@@ -36,6 +36,10 @@ public class ProductClientConvert {
                 .accountNumber(productClient.getAccountNumber())
                 .transactionFee(productClient.getTransactionFee())
                 .creditCardNumber(productClient.getCreditCardNumber())
+                .billingDay(productClient.getBillingDay())
+                .billingDate(productClient.getBillingDate())
+                .invoiceDebt(productClient.getInvoiceDebt())
+                .expiredDebt(productClient.getExpiredDebt())
                 .build();
     }
 
