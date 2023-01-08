@@ -4,6 +4,7 @@ import com.bootcamp.java.pasivoplazofijo.common.Constantes;
 import com.bootcamp.java.pasivoplazofijo.dto.webClientDTO.ClientResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,8 +22,10 @@ import java.time.Duration;
 @Transactional
 public class WcClientsServiceImpl implements WcClientsService {
 
+    @Autowired
+    Constantes constantes;
     private final WebClient wcClients = WebClient.builder()
-            .baseUrl(Constantes.WebClientUriMSCliente)
+            .baseUrl(constantes.webClientUriMSCliente)
             .defaultCookie("cookieKey", "cookieValue")
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .build();

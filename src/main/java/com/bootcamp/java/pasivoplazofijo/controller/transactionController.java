@@ -29,7 +29,7 @@ public class transactionController {
     }
 
     @GetMapping("/{documentNumber}")
-    public Mono<ResponseEntity<Flux<ProductClientTransactionDTO2>>> getByDocumentNumber(@PathVariable String documentNumber){
+    public Mono<ResponseEntity<Flux<ProductClientReportDTO>>> getByDocumentNumber(@PathVariable String documentNumber) {
         log.info("getByDocumentNumber executed {}", documentNumber);
         return Mono.just(ResponseEntity.ok()
                 .body(transactionService.findByDocumentNumber(documentNumber)));

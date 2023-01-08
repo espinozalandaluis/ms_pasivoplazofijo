@@ -384,20 +384,14 @@ public class TransactionServiceImpl implements TransactionService{
     }
 
     @Override
-    public Flux<ProductClientTransactionDTO2> findByDocumentNumber(String documentNumber) {
+    public Flux<ProductClientReportDTO> findByDocumentNumber(String documentNumber) {
         return productClientRepository.findByDocumentNumber(documentNumber)
-                .flatMap(productocliente -> {
-                    log.info("ProductClientTransactionDTO {}", productocliente);
-
-                    return transactionRepository.findByIdProductClient(productocliente.getId())
-                            .flatMap(trx -> {
-                                return Flux.just(ProductClientTransactionDTO2.builder()
-                                        .productClientDTO(productClientConvert.EntityToDTO(productocliente))
-                                        .transactionDTO(transactionConverter.EntityToDTO(trx))
-                                        .build());
-                            });
-                })
-                .switchIfEmpty(Mono.error(() -> new FunctionalException("No se encontraron registros de productos afiliados")));
+                .flatMap(prodCli -> {
+                    var data = transactionRepository.findByIdProductClient(prodCli.getId())
+                            .collectList()
+                            .map(transactions -> ProductClientReportDTO.from(prodCli, transactions));
+                    return data;
+                }).switchIfEmpty(Mono.error(() -> new FunctionalException("No se encontraron registros de productos afiliados")));
     }
 
     @Override
